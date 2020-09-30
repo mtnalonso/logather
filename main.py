@@ -1,8 +1,8 @@
 import requests
 
-from startpage import Startpage
-from tor_proxies import HTTP_PROXIES
-from validator import Validator
+from logather.startpage import Startpage
+from logather.tor_proxies import HTTP_PROXIES
+from logather.validator import Validator
 
 
 def main():
@@ -11,7 +11,7 @@ def main():
     sp = Startpage()
     sources = sp.get_sources(50)
     
-    validator = Validator()
+    validator = Validator(validation_timeout=10.0)
     valid_sources = validator.validate(sources)
 
     for source in valid_sources:

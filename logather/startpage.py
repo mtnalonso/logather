@@ -2,7 +2,7 @@ import requests
 import json
 from bs4 import BeautifulSoup
 
-from tor_proxies import HTTP_PROXIES
+from logather.tor_proxies import HTTP_PROXIES
 
 
 MIN_SOURCES = 30
