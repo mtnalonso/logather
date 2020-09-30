@@ -2,6 +2,7 @@ import requests
 
 from startpage import Startpage
 from tor_proxies import HTTP_PROXIES
+from validator import Validator
 
 
 def main():
@@ -9,16 +10,17 @@ def main():
 
     sp = Startpage()
     sources = sp.get_sources(50)
+    
+    validator = Validator()
+    valid_sources = validator.validate(sources)
 
-    from pprint import pprint
-    pprint(sources)
-    print(len(sources))
+    for source in valid_sources:
+        print(source)
 
 
 def get_tor_ip():
     response = requests.get('http://httpbin.org/ip', proxies=HTTP_PROXIES)
     return response.text
-
 
 
 if __name__ == '__main__':
