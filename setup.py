@@ -13,7 +13,7 @@ setup(
     packages=find_packages(),
     zip_safe=False,
     classifiers=[
-        "Development Status :: 1 - Beta",
+        "Development Status :: 2 - Pre-Alpha",
         "Environment :: Console",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
