@@ -1,2 +1,2 @@
 # Logather
-Public HTTP logs gatherer tool
+Public HTTP log gatherer tool
