@@ -8,10 +8,7 @@ def main():
     logather = Logather(
         min_potential_sources=args.min_log_results
     )
-    try:
-        logather.gather()
-    except:
-        return 1
+    logather.gather()
     return 0
 
 
