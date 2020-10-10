@@ -1,6 +1,7 @@
 import requests
 
 from logather.startpage import Startpage
+from logather.duckduckgo import Duckduckgo
 from logather.tor_proxies import HTTP_PROXIES
 from logather.validator import Validator
 
@@ -16,7 +17,7 @@ class Logather:
         print('Using ip: {}'.format(self._get_proxy_ip()))
 
         sp = Startpage()
-        sources = sp.get_sources(self.min_potential_sources)
+        sources = sp.get_sources(min_sources=self.min_potential_sources)
         
         validator = Validator(validation_timeout=self.validation_timeout)
         valid_sources = validator.validate(sources)

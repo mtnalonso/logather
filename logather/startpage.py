@@ -2,30 +2,15 @@ import requests
 import json
 from bs4 import BeautifulSoup
 
-from logather.tor_proxies import HTTP_PROXIES
+from logather.search_engine import SearchEngine, MIN_SOURCES
 
 
-MIN_SOURCES = 30
-
-
-browser_headers = {
-    'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-    'Accept-Language': 'q=0.8,en-US;q=0.5,en;q=0.3',
-    'Acccept-Encoding': 'gzip, deflate',
-    'Connection': 'close',
-    'Origin': 'https://startpage.com',
-    'Upgrade-Insecure-Requests': '1',
-}
-
-
-class Startpage:
-    def __init__(self, proxies=HTTP_PROXIES):
-        self._headers = browser_headers
-        self._proxies = proxies
+class Startpage(SearchEngine):
+    def __init__(self):
         self._base_url = 'https://startpage.com/'
         self._search_url = 'https://startpage.com/sp/search'
         self._log_query = 'inurl:(access.log | error.log) filetype:log "GET /"'
+        self._headers['Origin'] = 'https://startpage.com'
 
     def _search(self, sc=None, page_number=None):
         sc = sc or self._get_initial_sc_value()
@@ -68,12 +53,12 @@ class Startpage:
         self.sc = html.split('name="sc" value="')[1].split('"')[0]
         return self.sc
 
-    def get_sources(self, min_number=MIN_SOURCES):
+    def get_sources(self, min_sources=MIN_SOURCES):
         sources = []
         current_results_page = 1
         sc = self._get_initial_sc_value()
 
-        while len(sources) < min_number:
+        while len(sources) < min_sources:
             links, sc = self._search(sc, current_results_page)
             sources.extend(links)
             current_results_page += 1
