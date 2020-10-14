@@ -3,6 +3,7 @@ import json
 from bs4 import BeautifulSoup
 
 from logather.tor_proxies import HTTP_PROXIES
+from logather.exceptions import SearchEngineException
 
 
 MIN_SOURCES = 30
@@ -37,10 +38,15 @@ class Startpage:
             headers=self._headers,
             data=data
         )
-        
+
         soup = BeautifulSoup(response.content, 'html.parser')
-        results = soup.findAll('a', {'class': 'w-gl__result-title'})
-        sc = soup.findAll('input', {'name': 'sc'})[0].get('value')
+
+        try:
+            results = soup.findAll('a', {'class': 'w-gl__result-title'})
+            sc = soup.findAll('input', {'name': 'sc'})[0].get('value')
+        except IndexError:
+            raise SearchEngineException()
+
 
         links = [result['href'] for result in results]
         print(f'[+] Got {len(links)} potential log sources')
