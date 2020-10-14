@@ -1,0 +1,7 @@
+
+
+class SearchEngineException(Exception):
+    pass
+
+
+
