@@ -16,7 +16,7 @@ class Validator:
         self.validation_timeout = validation_timeout
 
     def validate(self, sources):
-        print('[*] Validating {} sources...'.format(len(sources)))
+        print(f'[*] Validating {len(sources)} sources...')
         valid_sources = Queue()
         log_validators = []
 
@@ -44,10 +44,10 @@ class LogValidator(Thread):
         try:
             response = requests.get(self.log_link, proxies=HTTP_PROXIES, verify=False, timeout=(3.05, 57))
         except requests.exceptions.ConnectionError:
-            print('[-] Connection error with {}'.format(self.log_link))
+            print(f'[-] Connection error with {self.log_link}')
             return
         except requests.exceptions.ReadTimeout:
-            print('[-] Timeout {}'.format(self.log_link))
+            print(f'[-] Timeout {self.log_link}')
             return
 
         try:
@@ -62,11 +62,11 @@ class LogValidator(Thread):
             self.valid_sources_queue.put(
                 {'link': self.log_link, 'type': 'APACHE_ACCESS'}
             )
-            print('[+] Got valid APACHE_ACCESS log {}'.format(self.log_link))
+            print(f'[+] Got valid APACHE_ACCESS log {self.log_link}')
         elif self.apache_error.match(decoded_content):
             self.valid_sources_queue.put(
                 {'link': self.log_link, 'type': 'APACHE_ERROR'}
             )
-            print('[+] Got valid APACHE_ERROR log {}'.format(self.log_link))
+            print(f'[+] Got valid APACHE_ERROR log {self.log_link}')
         return
 
