@@ -43,7 +43,7 @@ class Startpage:
         sc = soup.findAll('input', {'name': 'sc'})[0].get('value')
 
         links = [result['href'] for result in results]
-        print('[+] Got {} potential log sources'.format(len(links)))
+        print(f'[+] Got {len(links)} potential log sources')
         return links, sc
 
     def _build_post_data(self, sc, page_number=None):

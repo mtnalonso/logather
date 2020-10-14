@@ -13,11 +13,10 @@ class Logather:
         pass
 
     def gather(self):
-        print('Using ip: {}'.format(self._get_proxy_ip()))
+        print(f'Using ip: {self._get_proxy_ip()}')
 
         sp = Startpage()
         sources = sp.get_sources(self.min_potential_sources)
-        
         validator = Validator(validation_timeout=self.validation_timeout)
         valid_sources = validator.validate(sources)
 
