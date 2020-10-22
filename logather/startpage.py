@@ -38,18 +38,16 @@ class Startpage:
             headers=self._headers,
             data=data
         )
-
+        
         soup = BeautifulSoup(response.content, 'html.parser')
-
+        results = soup.findAll('a', {'class': 'w-gl__result-title'})
         try:
-            results = soup.findAll('a', {'class': 'w-gl__result-title'})
             sc = soup.findAll('input', {'name': 'sc'})[0].get('value')
         except IndexError:
             raise SearchEngineException()
 
-
         links = [result['href'] for result in results]
-        print(f'[+] Got {len(links)} potential log sources')
+        print('[+] Got {} potential log sources'.format(len(links)))
         return links, sc
 
     def _build_post_data(self, sc, page_number=None):
